@@ -19,12 +19,20 @@ repositories {
 }
 
 dependencies {
+	//	spring boot web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	//	spring boot security
 	implementation 'org.springframework.security:spring-security-core:5.7.3'
+	// spring boot devtools
 	implementation 'org.springframework.boot:spring-boot-devtools:2.7.4'
+	// spring boot starter mustache
+	implementation 'org.springframework.boot:spring-boot-starter-mustache:2.7.4'
+	// spring boot lombok
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
+	// spring boot mysql connector
+	runtimeOnly 'mysql:mysql-connector-java'
+	// spring boot starter test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

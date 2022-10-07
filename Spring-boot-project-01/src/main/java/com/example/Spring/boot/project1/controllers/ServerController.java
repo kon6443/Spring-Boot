@@ -1,6 +1,7 @@
 package com.example.Spring.boot.project1.controllers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 //import lombok.extern.log4j.Log4j;
@@ -13,24 +14,26 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 //@log4j
 @Controller
 public class ServerController {
-//    @RequestMapping(value = "/", method=GET)
-//    @RequestMapping(value = {"/", "/home.html"}, method=GET)
-    @ResponseBody
-    @GetMapping(value = {"/", "/home.html"})
+
+    @RequestMapping(value = "/")
     public String showHome() {
-        System.out.println("showHome function has been called.");
         return "home";
     }
+    @RequestMapping(value = {"/tetris"}, method=GET)
+    public String playTetris() {
+        return "/Tetris/tetris";
+    }
+//    @RequestMapping(value = {"/board"}, method=GET)
+//    public String showBoard() {
+//        return "/Board/board";
+//    }
+    @RequestMapping(value = {"/user"}, method=GET)
+    public String showUser() {
+        return "user";
+    }
+    @RequestMapping(value = {"/chat"}, method=GET)
+    public String showChat() {
+        return "chat";
+    }
 
-//    @ResponseBody
-//    @RequestMapping(value = {"/user", "/user.html"}, method=GET)
-//    public String showUser() {
-//        System.out.println("showUser.");
-//        return "user";
-//    }
-//    @GetMapping("/chat")
-//    public ResponseEntity<String> showChat() {
-//        System.out.println("showChat.");
-//        return ResponseEntity.ok("Chat page!");
-//    }
 }

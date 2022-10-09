@@ -1,5 +1,7 @@
 package com.example.Spring.boot.project1.controllers;
 
+import com.example.Spring.boot.project1.docs.User;
+import com.example.Spring.boot.project1.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,10 +29,17 @@ public class ServerController {
 //    public String showBoard() {
 //        return "/Board/board";
 //    }
+    UserService userService;
     @RequestMapping(value = {"/user"}, method=GET)
     public String showUser() {
+        System.out.print(userService.getAllItems());
         return "user";
     }
+//    @RequestMapping(value = "", method=GET)
+//    public List<User> getAllUsers() {
+//        LOG.info("Getting all users.");
+//        return userRepository.findAll();
+//    }
     @RequestMapping(value = {"/chat"}, method=GET)
     public String showChat() {
         return "chat";

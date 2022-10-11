@@ -1,17 +1,17 @@
 package com.example.Spring.boot.project1.controllers;
 
 import com.example.Spring.boot.project1.docs.User;
+import com.example.Spring.boot.project1.repository.UserRepository;
 import com.example.Spring.boot.project1.service.UserService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 //import lombok.extern.log4j.Log4j;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Optional;
+
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 //@log4j
 @Controller
@@ -29,17 +29,22 @@ public class ServerController {
 //    public String showBoard() {
 //        return "/Board/board";
 //    }
+
+    @Autowired
+    UserRepository userRepo;
     UserService userService;
     @RequestMapping(value = {"/user"}, method=GET)
     public String showUser() {
-        System.out.print(userService.getAllItems());
         return "user";
     }
-//    @RequestMapping(value = "", method=GET)
-//    public List<User> getAllUsers() {
-//        LOG.info("Getting all users.");
-//        return userRepository.findAll();
-//    }
+    @RequestMapping(value = "/user/:id/:pw", method=POST)
+    public void signIn(@RequestParam String id, @RequestParam String pw) {
+        System.out.println("Typed user id: " + id + ", typed user pw: " + pw);
+//        Optional<User> user = userRepo.findById(id).get();
+        System.out.println(userRepo.findById(id));
+        System.out.println(userRepo.findById(id).get());
+//        return user;
+    }
     @RequestMapping(value = {"/chat"}, method=GET)
     public String showChat() {
         return "chat";

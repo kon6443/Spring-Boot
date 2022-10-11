@@ -10,12 +10,11 @@ import org.springframework.context.annotation.ComponentScan;
 //@EnableAutoConfiguration
 @ComponentScan
 @SpringBootApplication
-@EnableAutoConfiguration(exclude={MongoAutoConfiguration.class})
+//@EnableAutoConfiguration(exclude={MongoAutoConfiguration.class})
+//@EnableAutoConfiguration(basePackages="com.example.Spring.boot.project1.controllers")
+@EnableAutoConfiguration()
 public class SpringBootProject01Application {
-//	@Value("${MONGO_URI}")
-//	private static String MONGO_URI;
 	public static void main(String[] args) {
-//		System.out.println("MONGO_URI: "+MONGO_URI);
 		SpringApplication.run(SpringBootProject01Application.class, args);
 	}
 

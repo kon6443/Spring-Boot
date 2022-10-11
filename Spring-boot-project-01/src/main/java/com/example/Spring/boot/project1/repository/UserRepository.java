@@ -2,16 +2,12 @@ package com.example.Spring.boot.project1.repository;
 
 import com.example.Spring.boot.project1.docs.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-//public interface UserRepository extends MongoRepository<User, String> {
-////    List<User> findByCategory(String id);
-//    List<User> findByID(String id);
-//    // User findByItemId(String id);
-////    User findById(String id);
-//}
-
+@Repository
 public interface UserRepository extends MongoRepository<User, String> {
-    Optional<User> findById(String id);
+//    public User findById(String id);
+//    public Optional<User> findById(String id);
 }

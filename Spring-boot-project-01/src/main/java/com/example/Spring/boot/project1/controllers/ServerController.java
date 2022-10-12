@@ -41,8 +41,9 @@ public class ServerController {
     public void signIn(@RequestParam String id, @RequestParam String pw) {
         System.out.println("Typed user id: " + id + ", typed user pw: " + pw);
 //        Optional<User> user = userRepo.findById(id).get();
-        System.out.println(userRepo.findById(id));
-        System.out.println(userRepo.findById(id).get());
+        System.out.println(userRepo.findByid(id));
+//        System.out.println(userRepo.findByid(id).getAddress());
+//        System.out.println(userRepo.findByUserid(id).get());
 //        return user;
     }
     @RequestMapping(value = {"/chat"}, method=GET)

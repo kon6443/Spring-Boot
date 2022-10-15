@@ -1,15 +1,14 @@
 package com.example.Spring.boot.project1.docs;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Getter
-@Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED) // 빈 생성자가 생기는 것을 방지합니다.
+//@NoArgsConstructor(access = AccessLevel.PROTECTED) // 빈 생성자가 생기는 것을 방지합니다.
+//@Getter
+//@Setter
+//@AllArgsConstructor
+@Data
 @Document(collection = "users")
 public class User {
     @Id

@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "users")
 public class User {
     @Id
+    private String _id;
     private String id;
     private String address;
     private String pw;

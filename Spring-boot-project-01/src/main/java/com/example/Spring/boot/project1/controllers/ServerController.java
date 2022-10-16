@@ -1,13 +1,13 @@
 package com.example.Spring.boot.project1.controllers;
 
 import com.example.Spring.boot.project1.docs.User;
-import com.example.Spring.boot.project1.repository.UserRepository;
 import com.example.Spring.boot.project1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 //import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -31,7 +31,6 @@ public class ServerController {
 //    }
 
     @Autowired
-    UserRepository userRepo;
     UserService userService;
     @RequestMapping(value = {"/user"}, method=GET)
     public String showUser() {
@@ -40,10 +39,10 @@ public class ServerController {
     @RequestMapping(value = "/user/:id/:pw", method=POST)
     public void signIn(@RequestParam String id, @RequestParam String pw) {
         System.out.println("Typed user id: " + id + ", typed user pw: " + pw);
-        User user = userRepo.findById(id).get();
-        System.out.println("ID: " + user.getId());
-//        System.out.println(userRepo.findById(id));
-//        System.out.println(userRepo.findById(id).getAddress());
+        List<User> users = userService.getEveryone();
+        Optional<User> user = userService.getUser(id);
+//        User user = userService.searchByAddress(id);
+
 //        return user;
     }
     @RequestMapping(value = {"/chat"}, method=GET)

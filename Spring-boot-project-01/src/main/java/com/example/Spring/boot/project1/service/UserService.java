@@ -14,7 +14,7 @@ public class UserService {
     UserRepository userRepo;
     public Optional<User> getUser(String id) {
 //        User user = userRepo.findById(id).get();
-        Optional<User> user = userRepo.findById(id);
+        Optional<User> user = userRepo.findByid(id);
         System.out.println("=====getUser=====");
         System.out.println("user id: " + user.get().getId());
         System.out.println("user address: " + user.get().getAddress());

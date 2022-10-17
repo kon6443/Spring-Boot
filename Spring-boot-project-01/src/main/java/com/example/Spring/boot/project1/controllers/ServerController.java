@@ -39,10 +39,8 @@ public class ServerController {
     @RequestMapping(value = "/user/:id/:pw", method=POST)
     public void signIn(@RequestParam String id, @RequestParam String pw) {
         System.out.println("Typed user id: " + id + ", typed user pw: " + pw);
-        List<User> users = userService.getEveryone();
+//        List<User> users = userService.getEveryone();
         Optional<User> user = userService.getUser(id);
-//        User user = userService.searchByAddress(id);
-
 //        return user;
     }
     @RequestMapping(value = {"/chat"}, method=GET)

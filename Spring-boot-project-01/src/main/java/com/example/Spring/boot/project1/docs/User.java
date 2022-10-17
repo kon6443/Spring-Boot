@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 //@Getter
 //@Setter
 //@AllArgsConstructor
+
+//  DTO
 @Data
 @Document(collection = "users")
 public class User {

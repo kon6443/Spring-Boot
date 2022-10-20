@@ -36,12 +36,16 @@ public class ServerController {
     public String showUser() {
         return "user";
     }
+    @RequestMapping(value = "/user/:id/:address/:pw/:pwc", method=POST)
+    public void signUp(@RequestParam String id, @RequestParam String address, @RequestParam String pw, @RequestParam String pwc) {
+        System.out.println("Sign up, id: " + id + ", address: " + address + ", pw: " + pw + ", pwc: " + pwc);
+        String errorFlag = userValidateCheck(id, address, pw, pwc);
+//        Optional<User> user = userService.getUser(id);
+    }
     @RequestMapping(value = "/user/:id/:pw", method=POST)
     public void signIn(@RequestParam String id, @RequestParam String pw) {
         System.out.println("Typed user id: " + id + ", typed user pw: " + pw);
-//        List<User> users = userService.getEveryone();
         Optional<User> user = userService.getUser(id);
-//        return user;
     }
     @RequestMapping(value = {"/chat"}, method=GET)
     public String showChat() {

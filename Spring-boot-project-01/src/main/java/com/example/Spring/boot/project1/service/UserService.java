@@ -20,6 +20,24 @@ public class UserService {
         System.out.println("user address: " + user.get().getAddress());
         return user;
     }
+    public String userValidateCheck(String id, String address, String pw, String pwc) {
+        if(id.isBlank()) return "Please type your ID.";
+        Optional<User> user = userRepo.findByid(id);
+        if(user.isPresent()) return "User name: " + user.get().getId() + " already exists";
+        if(address.isBlank()) return "Please type your address.";
+        if(pw.isBlank()) return "Please type your password.";
+        if(pwc.isBlank()) return "Please type your password confirmation.";
+        if(!pw.equals(pwc)) return "Your password and password confirmation is not matched!";
+        return "";
+    }
+    public String registerUser(String id, String address, String pw) {
+        User user = new User();
+        user.setId(id);
+        user.setAddress(address);
+        user.setPw(pw);
+        userRepo.save(user);
+        return "Your account has been created successfully, you can now log in.";
+    }
 //    public User searchByAddress(String address) {
 //        User user = userRepo.findByAddress(address);
 //        System.out.println("=====searchByAddress=====");

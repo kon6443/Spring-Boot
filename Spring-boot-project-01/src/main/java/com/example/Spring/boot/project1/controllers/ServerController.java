@@ -32,6 +32,7 @@ public class ServerController {
 
     @Autowired
     UserService userService;
+//    JasyptConfig jC;
     @RequestMapping(value = {"/user"}, method=GET)
     public String showUser() {
         return "user";
@@ -39,7 +40,12 @@ public class ServerController {
     @RequestMapping(value = "/user/:id/:address/:pw/:pwc", method=POST)
     public void signUp(@RequestParam String id, @RequestParam String address, @RequestParam String pw, @RequestParam String pwc) {
         System.out.println("Sign up, id: " + id + ", address: " + address + ", pw: " + pw + ", pwc: " + pwc);
-        String errorFlag = userValidateCheck(id, address, pw, pwc);
+        String errorStatus = userService.userValidateCheck(id, address, pw, pwc);
+        if(!errorStatus.isBlank()) {
+            System.out.println(errorStatus);
+        }
+        JasyptConfig jC = new JasyptConfig();
+        jC.encryptPassword(pw);
 //        Optional<User> user = userService.getUser(id);
     }
     @RequestMapping(value = "/user/:id/:pw", method=POST)

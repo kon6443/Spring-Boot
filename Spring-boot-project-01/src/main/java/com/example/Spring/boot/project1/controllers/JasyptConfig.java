@@ -9,21 +9,27 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+//@Service
+//@Configuration
 @Component
 public class JasyptConfig {
+    private static String encryptKey;
     @Value("${jasypt.encryptor.password}")
-    private String encryptKey;
-    public void encryptPassword(String pw) {
-        String temp = "jasyptStringEncryptor";
-        System.out.println("Original password: " + pw);
+    public void setEncryptKey(String encryptKey) {
+        this.encryptKey = encryptKey;
+    }
+    public static String encryptPassword(String pw) {
         StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
-        System.out.println("encryptKey: " + encryptKey);
-        encryptor.setPassword(temp);
+        encryptor.setPassword(encryptKey);
         String encryptedPassword = encryptor.encrypt(pw);
-        System.out.println("Encrypted password: " + encryptedPassword);
+        return encryptedPassword;
+    }
+    public static String decryptPassword(String encryptedPw) {
         StandardPBEStringEncryptor decryptor = new StandardPBEStringEncryptor();
-        decryptor.setPassword(temp);
-        System.out.println(decryptor.decrypt(encryptedPassword));
+        decryptor.setPassword(encryptKey);
+        String password = decryptor.decrypt(encryptedPw);
+        return password;
     }
 }

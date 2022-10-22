@@ -9,8 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 	Including (@Configuration, @Repository, @Service, @Controller and @RestController)
 */
 
-//@ComponentScan
-//@EnableAutoConfiguration
 @SpringBootApplication
 public class SpringBootProject01Application {
 	public static void main(String[] args) {

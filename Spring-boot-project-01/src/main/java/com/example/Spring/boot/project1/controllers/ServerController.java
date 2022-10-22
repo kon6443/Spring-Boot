@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 //import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Controller;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +31,6 @@ public class ServerController {
 
     @Autowired
     UserService userService;
-//    JasyptConfig jC;
     @RequestMapping(value = {"/user"}, method=GET)
     public String showUser() {
         return "user";
@@ -44,14 +42,16 @@ public class ServerController {
         if(!errorStatus.isBlank()) {
             System.out.println(errorStatus);
         }
-        JasyptConfig jC = new JasyptConfig();
-        jC.encryptPassword(pw);
-//        Optional<User> user = userService.getUser(id);
+        System.out.println("Original password: " + pw);
+        pw = JasyptConfig.encryptPassword(pw);
+        System.out.println("Encrypted password: " + pw);
+        userService.registerUser(id, address, pw);
+        Optional<User> user = userService.getUser(id);
     }
     @RequestMapping(value = "/user/:id/:pw", method=POST)
     public void signIn(@RequestParam String id, @RequestParam String pw) {
         System.out.println("Typed user id: " + id + ", typed user pw: " + pw);
-        Optional<User> user = userService.getUser(id);
+        userService.logIn(id, pw);
     }
     @RequestMapping(value = {"/chat"}, method=GET)
     public String showChat() {

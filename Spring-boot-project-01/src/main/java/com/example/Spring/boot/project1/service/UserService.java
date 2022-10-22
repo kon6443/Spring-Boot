@@ -1,5 +1,6 @@
 package com.example.Spring.boot.project1.service;
 
+import com.example.Spring.boot.project1.controllers.JasyptConfig;
 import com.example.Spring.boot.project1.docs.User;
 import com.example.Spring.boot.project1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.example.Spring.boot.project1.controllers.JasyptConfig.decryptPassword;
 
 @Service
 public class UserService {
@@ -38,14 +41,12 @@ public class UserService {
         userRepo.save(user);
         return "Your account has been created successfully, you can now log in.";
     }
-//    public User searchByAddress(String address) {
-//        User user = userRepo.findByAddress(address);
-//        System.out.println("=====searchByAddress=====");
-//        System.out.println("ID: " + user.getId());
-//        System.out.println("Address: " + user.getAddress());
-//        System.out.println();
-//        return user;
-//    }
+    public String logIn(String id, String pw) {
+        Optional<User> user = userRepo.findByid(id);
+        if(user.isEmpty()) return "There is no user named: " + id;
+        String decryptedPw = decryptPassword(user.get().getPw());
+        
+    }
     public List<User> getEveryone() {
         List<User> users = userRepo.findAll();
         for(User user : users) {

@@ -21,8 +21,14 @@ repositories {
 dependencies {
 	//	spring boot web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
 	//	spring boot security
-	implementation 'org.springframework.security:spring-security-core:5.7.3'
+	implementation 'org.springframework.boot:spring-boot-starter-security:2.7.4'
+//	implementation 'org.springframework.security:spring-security-core:5.7.3'
+
+	//thymeleaf
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.0.4.RELEASE'
+
 	// spring boot devtools
 	implementation 'org.springframework.boot:spring-boot-devtools:2.7.4'
 
@@ -31,13 +37,17 @@ dependencies {
 
 	// spring boot starter data MongoDB
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.7.4'
+
 	// Java simplified encryption.
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
+
 	// spring boot lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+
 	// spring boot mysql connector
 	runtimeOnly 'mysql:mysql-connector-java'
+
 	// spring boot starter test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

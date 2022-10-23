@@ -40,13 +40,13 @@ public class ServerController {
         System.out.println("Sign up, id: " + id + ", address: " + address + ", pw: " + pw + ", pwc: " + pwc);
         String errorStatus = userService.userValidateCheck(id, address, pw, pwc);
         if(!errorStatus.isBlank()) {
+            // error here.
             System.out.println(errorStatus);
         }
         System.out.println("Original password: " + pw);
         pw = JasyptConfig.encryptPassword(pw);
         System.out.println("Encrypted password: " + pw);
         userService.registerUser(id, address, pw);
-        Optional<User> user = userService.getUser(id);
     }
     @RequestMapping(value = "/user/:id/:pw", method=POST)
     public void signIn(@RequestParam String id, @RequestParam String pw) {

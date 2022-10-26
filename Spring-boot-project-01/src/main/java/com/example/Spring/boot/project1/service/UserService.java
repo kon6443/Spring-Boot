@@ -45,6 +45,7 @@ public class UserService {
         Optional<User> user = userRepo.findByid(id);
         if(user.isEmpty()) return "There is no user named: " + id;
         String decryptedPw = decryptPassword(user.get().getPw());
+        System.out.println("decryptedPw: " + decryptedPw);
         return "";
     }
     public List<User> getEveryone() {

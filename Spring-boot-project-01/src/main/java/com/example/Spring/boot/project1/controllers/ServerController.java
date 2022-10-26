@@ -48,7 +48,7 @@ public class ServerController {
         System.out.println("Encrypted password: " + pw);
         userService.registerUser(id, address, pw);
     }
-    @RequestMapping(value = "/user/:id/:pw", method=POST)
+    @RequestMapping(value = "/user/signin", method=POST)
     public void signIn(@RequestParam String id, @RequestParam String pw) {
         System.out.println("Typed user id: " + id + ", typed user pw: " + pw);
         userService.logIn(id, pw);

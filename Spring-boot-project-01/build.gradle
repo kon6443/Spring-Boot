@@ -23,7 +23,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	//	spring boot security
-//	implementation 'org.springframework.boot:spring-boot-starter-security:2.7.4'
+	implementation 'org.springframework.boot:spring-boot-starter-security:2.7.4'
 
 	//thymeleaf
 //	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.0.4.RELEASE'
@@ -40,6 +40,12 @@ dependencies {
 	// Java simplified encryption.
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
 
+//	implementation 'org.webjars.npm:jsonwebtoken:8.5.1'
+
+	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
 	// spring boot lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -49,6 +55,8 @@ dependencies {
 
 	// spring boot starter test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+
 }
 
 tasks.named('test') {

@@ -50,8 +50,24 @@ public class ServerController {
     }
     @RequestMapping(value = "/user/signin", method=POST)
     public void signIn(@RequestParam String id, @RequestParam String pw) {
-        System.out.println("Typed user id: " + id + ", typed user pw: " + pw);
-        userService.logIn(id, pw);
+        String temp = userService.logIn(id, pw);
+    }
+    @RequestMapping(value = "/user/signin", method=POST)
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+                .body(new UserInfoResponse(userDetails.getId(),
+                        userDetails.getUsername(),
+                        userDetails.getEmail(),
+                        roles));
     }
     @RequestMapping(value = {"/chat"}, method=GET)
     public String showChat() {

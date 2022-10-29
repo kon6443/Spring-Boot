@@ -52,6 +52,7 @@ public class ServerController {
     public void signIn(@RequestParam String id, @RequestParam String pw) {
         String temp = userService.logIn(id, pw);
     }
+    /**
     @RequestMapping(value = "/user/signin", method=POST)
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
@@ -69,6 +70,7 @@ public class ServerController {
                         userDetails.getEmail(),
                         roles));
     }
+     */
     @RequestMapping(value = {"/chat"}, method=GET)
     public String showChat() {
         return "chat";

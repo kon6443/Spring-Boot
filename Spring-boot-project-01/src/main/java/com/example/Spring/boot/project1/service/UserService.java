@@ -13,6 +13,13 @@ import static com.example.Spring.boot.project1.controllers.JasyptConfig.decryptP
 
 @Service
 public class UserService {
+    /**
+     * Injectioning an object to call registered bean by using @Autowired annotation, (Auto injection)
+     * Controller has a dependency on Service interface, and Controller and Service are on a dependency relationship.
+     *
+     * @Autowired 어노테이션을 사용해 등록된 빈을 불러와 객체를 주입시킴 (자동 의존성 주입).
+     * Controller는 Service 인터페이스에 의존성을 가지고 있으며, Controller와 Service인터페이스는 의존관계에 있다.
+     */
     @Autowired
     UserRepository userRepo;
     public Optional<User> getUser(String id) {

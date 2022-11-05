@@ -49,8 +49,9 @@ public class ServerController {
         userService.registerUser(id, address, pw);
     }
     @RequestMapping(value = "/user/signin", method=POST)
-    public void signIn(@RequestParam String id, @RequestParam String pw) {
-        String temp = userService.logIn(id, pw);
+    public String signIn(@RequestParam String id, @RequestParam String pw) {
+        String token = userService.logIn(id, pw);
+        return token;
     }
     @RequestMapping(value = {"/chat"}, method=GET)
     public String showChat() {

@@ -2,6 +2,7 @@ package com.example.Spring.boot.project1.service;
 
 import com.example.Spring.boot.project1.controllers.JasyptConfig;
 import com.example.Spring.boot.project1.docs.User;
+import com.example.Spring.boot.project1.jwt.JwtTokenProvider;
 import com.example.Spring.boot.project1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.example.Spring.boot.project1.controllers.JasyptConfig.decryptPassword;
+import static com.example.Spring.boot.project1.controllers.JasyptConfig.encryptPassword;
 
 @Service
 public class UserService {
@@ -22,6 +24,8 @@ public class UserService {
      */
     @Autowired
     UserRepository userRepo;
+    @Autowired
+    JwtTokenProvider jwtTokenProvider;
     public Optional<User> getUser(String id) {
 //        User user = userRepo.findById(id).get();
         Optional<User> user = userRepo.findByid(id);
@@ -53,7 +57,12 @@ public class UserService {
         Optional<User> user = userRepo.findByid(id);
         if(user.isEmpty()) return "There is no user named: " + id;
         String decryptedPw = decryptPassword(user.get().getPw());
-        return "";
+        if(!decryptedPw.equals(pw)) return null;
+        // userName, userRole
+        // String userPk, String roles
+        String token = jwtTokenProvider.createToken(id, "USER");
+        System.out.println("token: " + token);
+        return token;
     }
     public List<User> getEveryone() {
         List<User> users = userRepo.findAll();

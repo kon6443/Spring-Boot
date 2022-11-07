@@ -1,6 +1,7 @@
 package com.example.Spring.boot.project1.controllers;
 
 import com.example.Spring.boot.project1.docs.User;
+import com.example.Spring.boot.project1.docs.UserRoles;
 import com.example.Spring.boot.project1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -2,6 +2,7 @@ package com.example.Spring.boot.project1.service;
 
 import com.example.Spring.boot.project1.controllers.JasyptConfig;
 import com.example.Spring.boot.project1.docs.User;
+import com.example.Spring.boot.project1.docs.UserRoles;
 import com.example.Spring.boot.project1.jwt.JwtTokenProvider;
 import com.example.Spring.boot.project1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,10 +58,11 @@ public class UserService {
         Optional<User> user = userRepo.findByid(id);
         if(user.isEmpty()) return "There is no user named: " + id;
         String decryptedPw = decryptPassword(user.get().getPw());
-        if(!decryptedPw.equals(pw)) return null;
-        // userName, userRole
-        // String userPk, String roles
-        String token = jwtTokenProvider.createToken(id, "USER");
+        if(!decryptedPw.equals(pw)) {
+            System.out.println("password not matching!");
+            return null;
+        }
+        String token = jwtTokenProvider.createToken(id, UserRoles.USER);
         System.out.println("token: " + token);
         return token;
     }

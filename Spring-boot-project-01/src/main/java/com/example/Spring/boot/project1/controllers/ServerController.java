@@ -4,9 +4,12 @@ import com.example.Spring.boot.project1.docs.User;
 import com.example.Spring.boot.project1.docs.UserRoles;
 import com.example.Spring.boot.project1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 //import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Controller;
+
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,13 +52,22 @@ public class ServerController {
         System.out.println("Encrypted password: " + pw);
         userService.registerUser(id, address, pw);
     }
+
+    // @ResponseBody: URL 요청에 대한 응답으로 문자열 리턴, 생략시 해당 문자열의 이름을 가진 파일을 응답함.
+    // If @ResponseBody exists above the API, the API will return String object.
+    // If @ResponseBody does not exist above the API, the API will return a file with the same name as the String value.
+    @ResponseBody
     @RequestMapping(value = "/user/signin", method=POST)
-    public String signIn(@RequestParam String id, @RequestParam String pw) {
+    public String signIn(@RequestParam String id, @RequestParam String pw, HttpServletResponse response) {
         String token = userService.logIn(id, pw);
+        System.out.println("Token: " + token);
+        response.setHeader("Authorization", token);
         return token;
     }
     @RequestMapping(value = {"/chat"}, method=GET)
-    public String showChat() {
+    public String showChat(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        System.out.println("Name: " + user.get_id() + ", Address: " + user.getAddress());
         return "chat";
     }
 

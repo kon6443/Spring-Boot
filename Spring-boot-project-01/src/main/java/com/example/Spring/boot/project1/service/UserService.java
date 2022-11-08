@@ -54,7 +54,6 @@ public class UserService {
         return "Your account has been created successfully, you can now log in.";
     }
     public String logIn(String id, String pw) {
-        System.out.println("Typed user id: " + id + ", typed user pw: " + pw);
         Optional<User> user = userRepo.findByid(id);
         if(user.isEmpty()) return "There is no user named: " + id;
         String decryptedPw = decryptPassword(user.get().getPw());
@@ -63,7 +62,7 @@ public class UserService {
             return null;
         }
         String token = jwtTokenProvider.createToken(id, UserRoles.USER);
-        System.out.println("token: " + token);
+
         return token;
     }
     public List<User> getEveryone() {

@@ -1,14 +1,20 @@
 package com.example.Spring.boot.project1.controllers;
 
+import com.example.Spring.boot.project1.docs.TokenDto;
 import com.example.Spring.boot.project1.docs.User;
 import com.example.Spring.boot.project1.docs.UserRoles;
 import com.example.Spring.boot.project1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 //import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Controller;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
@@ -36,9 +42,7 @@ public class ServerController {
     @Autowired
     UserService userService;
     @RequestMapping(value = {"/user"}, method=GET)
-    public String showUser() {
-        return "user";
-    }
+    public String showUser() {return "user";}
     @RequestMapping(value = "/user/:id/:address/:pw/:pwc", method=POST)
     public void signUp(@RequestParam String id, @RequestParam String address, @RequestParam String pw, @RequestParam String pwc) {
         System.out.println("Sign up, id: " + id + ", address: " + address + ", pw: " + pw + ", pwc: " + pwc);
@@ -58,11 +62,13 @@ public class ServerController {
     // If @ResponseBody does not exist above the API, the API will return a file with the same name as the String value.
     @ResponseBody
     @RequestMapping(value = "/user/signin", method=POST)
-    public String signIn(@RequestParam String id, @RequestParam String pw, HttpServletResponse response) {
+    // ResponseEntity
+    public ResponseEntity signIn(@RequestParam String id, @RequestParam String pw, HttpServletResponse response) {
         String token = userService.logIn(id, pw);
-        System.out.println("Token: " + token);
         response.setHeader("Authorization", token);
-        return token;
+//        return token;
+        HttpHeaders httpHeaders = new HttpHeaders();
+        return new ResponseEntity<>(new TokenDto(token), httpHeaders, HttpStatus.OK);
     }
     @RequestMapping(value = {"/chat"}, method=GET)
     public String showChat(Authentication authentication) {

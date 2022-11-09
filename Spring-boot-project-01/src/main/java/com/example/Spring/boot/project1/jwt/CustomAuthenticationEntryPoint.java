@@ -12,6 +12,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
+        System.out.println("CustomAuthenticationEntryPoint has been called.");
         // TODO Auto-generated method stub
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Denied");
     }

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -27,7 +28,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/styles.css", "/js/**", "/img/**", "/lib/**");
+    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 일반적인 루트가 아닌 다른 방식으로 요청시 거절, header에 id, pw가 아닌 token(jwt)을 달고 간다. 그래서 basic이 아닌 bearer를 사용한다.
@@ -40,6 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Not to use session since we are using JWT.
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
+                .headers()
+                .and()
         /**
          * antMatchers() : 해당 URL로 요청 시 설정을 해준다.
          * authenticated() : andMatchers에 속해있는 URL로 요청이 오면 인증이 필요하다고 설정한다.
@@ -51,17 +57,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // All paths below down are going to be checked their permission.
                 .authorizeRequests()
 
+                .antMatchers("/").permitAll()
                     // Everyone can access to /user path in order to sign up and sign in.
-                    .antMatchers("/user").permitAll()
+                    .antMatchers("/user/**").permitAll()
 
-                    // Other paths requires ROLE_USER permission to access.
-                    .anyRequest().hasRole("ROLE_USER")
-                .and()
-                    // Customized CustomAuthenticationEntryPoint.
-                    .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-                .and()
-                    // Add JwtAuthenticationFilter before UsernamePasswordAuthenticationFilter.
-                    .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                    // Allowing css files as well.
+//                    .antMatchers("/styles.css").permitAll()
+
+                    // Other paths requires USER permission to access.
+                    .anyRequest().hasRole("USER")
+
+         .and()
+
+                // Customized CustomAuthenticationEntryPoint.
+                .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+         .and()
+                // Add JwtAuthenticationFilter before UsernamePasswordAuthenticationFilter.
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         //                .antMatchers("/test").authenticated()
         //                .antMatchers("/chat").authenticated()
         //                .antMatchers("/admin/**").hasRole("ADMIN")

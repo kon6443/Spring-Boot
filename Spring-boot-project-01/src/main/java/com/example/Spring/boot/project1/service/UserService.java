@@ -62,7 +62,8 @@ public class UserService {
             return null;
         }
         String token = jwtTokenProvider.createToken(id, UserRoles.USER);
-
+        System.out.println("Token: " + token);
+        System.out.println("user id: " + jwtTokenProvider.getUserId(token));
         return token;
     }
     public List<User> getEveryone() {

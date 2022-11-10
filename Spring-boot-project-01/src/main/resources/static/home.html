@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="/styles.css">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<title>Onam Kwon</title>
 		<body class="body" style="background-color: #1c1c1e; color: rgb(221,221,221); font-family: Sans-serif; margin:0 auto;"></body>
 		<!-- Bootstrap CSS
@@ -70,18 +71,41 @@
 			</ul>
 		</div>
 			<script>
-				function loggedinInfo() {
-					console.log('loggedinInfo function has been called.');
-					$.ajax({
-						type: "get",
-						url: 'http://localhost:8080/',
-						data: {},
-						dataType:'text',
-						success: function(res) {
-							// console.log('index res: ', res);
-						}
-					});
-				}
+				/**
+				XMLHttpRequest.prototype.open = (function(open) {
+					console.log("hi");
+					return function(method,url,async) {
+							open.apply(this,arguments);
+							let key = "Authorization";
+							this.setRequestHeader(key, localStorage.getItem(key));
+// 							this.setRequestHeader('customHeader2', 'someOtherValue');
+						};
+				})(XMLHttpRequest.prototype.open);
+				*/
+				let key = "Authorization";
+				$.ajax({
+// 					url: "/",
+				    headers: { Authorization: localStorage.getItem(key) }
+				});
+				//This is the fetch event listener
+				self.addEventListener("fetch", (event) => {
+				    var currentUrl = new URL(event.request.url);
+					console.log("eventListener fetch");
+					console.log("currentUrl: ", currentUrl);
+				    if (currentUrl.origin === location.origin){
+				    	let key = "Authorization";
+				        var newRequest = new Request(event.request, {
+				            mode: "cors",
+				            credentials: "same-origin",
+				            headers: {
+				                key: localStorage.getItem(key),
+				            }
+				        });
+				        event.respondWith(fetch(newRequest));
+				    } else {
+						event.respondWith(fetch(event.request));
+				    }
+				});
 			</script>
 		<!-- Option 1: Bootstrap Bundle with Popper -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>

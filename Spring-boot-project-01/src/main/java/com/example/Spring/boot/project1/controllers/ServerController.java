@@ -63,12 +63,13 @@ public class ServerController {
     @ResponseBody
     @RequestMapping(value = "/user/signin", method=POST)
     // ResponseEntity
-    public ResponseEntity signIn(@RequestParam String id, @RequestParam String pw, HttpServletResponse response) {
+    public ResponseEntity<TokenDto> signIn(@RequestParam String id, @RequestParam String pw, HttpServletResponse response) {
         String token = userService.logIn(id, pw);
         response.setHeader("Authorization", token);
 //        return token;
         HttpHeaders httpHeaders = new HttpHeaders();
-        return new ResponseEntity<>(new TokenDto(token), httpHeaders, HttpStatus.OK);
+//        return new ResponseEntity<>(new TokenDto(token), httpHeaders, HttpStatus.OK);
+        return ResponseEntity.ok(new TokenDto(token));
     }
     @RequestMapping(value = {"/chat"}, method=GET)
     public String showChat(Authentication authentication) {

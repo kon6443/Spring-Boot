@@ -65,7 +65,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                    .antMatchers("/styles.css").permitAll()
 
                     // Other paths requires USER permission to access.
-                    .anyRequest().hasRole("USER")
+//                    .anyRequest().hasRole("USER")
+                    .anyRequest().authenticated()
 
          .and()
 

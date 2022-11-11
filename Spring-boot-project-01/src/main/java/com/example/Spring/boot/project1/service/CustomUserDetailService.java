@@ -1,11 +1,14 @@
 package com.example.Spring.boot.project1.service;
 
+import com.example.Spring.boot.project1.docs.User;
 import com.example.Spring.boot.project1.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service

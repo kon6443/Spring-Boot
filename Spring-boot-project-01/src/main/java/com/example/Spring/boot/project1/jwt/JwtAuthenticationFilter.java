@@ -24,15 +24,12 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // Receiving JWT token from the header.
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
-        System.out.println("doFilter token: " + token);
         // Checks token if it validates.
         if (token!=null && jwtTokenProvider.validateToken(token)) {
             // Get the user information if the token validates.
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             // Save the authentication object into the SecurityContext.
             SecurityContextHolder.getContext().setAuthentication(authentication);
-//            User temp = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//            System.out.println("temp: " + temp.getAddress());
         }
         chain.doFilter(request, response);
     }

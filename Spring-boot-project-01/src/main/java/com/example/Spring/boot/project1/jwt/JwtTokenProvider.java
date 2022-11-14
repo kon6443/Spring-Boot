@@ -1,5 +1,6 @@
 package com.example.Spring.boot.project1.jwt;
 
+import com.example.Spring.boot.project1.docs.User;
 import com.example.Spring.boot.project1.docs.UserRoles;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
@@ -52,8 +53,10 @@ public class JwtTokenProvider {
 
     // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserId(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+        User user = (User) userDetailsService.loadUserByUsername(this.getUserId(token));
+        return new UsernamePasswordAuthenticationToken(user, "", user.getAuthorities());
+//        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserId(token));
+//        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     // 토큰에서 회원 정보 추출

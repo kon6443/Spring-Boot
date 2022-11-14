@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 //import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Controller;
@@ -29,12 +30,17 @@ public class ServerController {
 
     @RequestMapping(value = "/")
     public String showHome() {
-        User temp = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println("temp: " + temp.getAddress());
-//        if(user==null) {
-//            System.out.println("authenticaion is null~~");
-//        }
-//        System.out.println("user id: " + user.getId() + ", address: " + user.getAddress());
+//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("Authentication: " + authentication);
+        System.out.println("Principal: " + authentication.getPrincipal());
+        System.out.println("ID: " + authentication.getName());
+
+        User user = (User) authentication.getPrincipal();
+        System.out.println("user id: " + user.getId());
+//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        System.out.println("user id : " + user.getId());
         return "home";
     }
     @RequestMapping(value = {"/tetris"}, method=GET)
